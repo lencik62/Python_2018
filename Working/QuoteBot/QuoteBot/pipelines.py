@@ -8,4 +8,10 @@
 
 class QuotebotPipeline(object):
     def process_item(self, item, spider):
+        if item['Author']:
+            item['Author'] = [author.upper() for author in item['Author']]
+        if item['Quote']:
+            item['Quote'] = [  quote.replace('\u201c', "") for quote in item['Quote']]
+            item['Quote'] = [  quote.replace('\u201d', "") for quote in item['Quote']]
+
         return item
