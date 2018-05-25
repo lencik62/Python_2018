@@ -5,6 +5,7 @@ from scrapy.selector import Selector
 from scrapy.http import Request
 from time import sleep
 from selenium.common.exceptions import  NoSuchElementException
+from BookGrabber.items import BookgrabberItem
 class sel_spider_multi_page(Spider):
     name = 'sel'
     allowed_domains = ['books.toscrape.com']
@@ -34,6 +35,12 @@ class sel_spider_multi_page(Spider):
                 self.logger.info("No more pages to load")
 
                 break
-    def parse_book(self, response):
 
-        pass
+    def parse_book(self, response):
+        items = BookgrabberItem()
+        title = response.css('h1::text').extract_first()
+        url = response.request.url
+    
+        items['title'] = title
+        items['url'] = url
+        yield items

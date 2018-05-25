@@ -11,4 +11,10 @@ import scrapy
 class MultipagescrapperItem(scrapy.Item):
     # define the fields for your item here like:
     # name = scrapy.Field()
+    title = scrapy.Field()
+    price = scrapy.Field()
+    image_url =  scrapy.Field()
+    rating = scrapy.Field()
+    description = scrapy.Field()
+    details = scrapy.Field()
     pass

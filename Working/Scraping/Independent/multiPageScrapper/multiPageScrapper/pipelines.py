@@ -8,4 +8,12 @@
 
 class MultipagescrapperPipeline(object):
     def process_item(self, item, spider):
-        return item
+        if item['description']:
+            item['description'] =  item['description'].replace('...more','...')
+            return item
+        if item['image_url']:
+            item['image_url'] =  item['image_url'].replace('../../','http://books.toScrape.com/')
+            return item
+        if item['rating']:
+            item['rating'] =  item['rating'].replace('star-rating',"")
+            return item
