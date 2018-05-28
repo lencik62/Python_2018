@@ -5,7 +5,7 @@ def sprial():
     i = 0
     while i < 300:
         pag.dragRel(i,0,duration=.01)
-        i+=10    
+        i+=10
         pag.dragRel(0,-i,duration=.01)
         i+=10
         pag.dragRel(-i,0,duration=.01)
@@ -33,8 +33,12 @@ def reverse_minimize():
         pag.dragRel(0,i,duration=.01)
         i+=10
 
+
+def main():
+    sprial()
+    faker()
+
 if __name__ =="__main__":
     print("running main")
     print("please drag the cursor to the left top most corner to stop the auto mouse controls")
-    sprial()
-    faker()
+    main()
