@@ -2,6 +2,18 @@
 	"folders": [
 		{
 			"path": "."
+		},
+		{
+			"path": "algorithms"
+		},
+		{
+			"path": "Beta_projects"
+		},
+		{
+			"path": "ML"
+		},
+		{
+			"path": "Working"
 		}
 	],
 	"settings": {}
