@@ -1,4 +1,4 @@
-import pyautogui as pag 
+import pyautogui as pag
 
 
 pag.moveRel(0,100)

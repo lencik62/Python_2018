@@ -18,8 +18,8 @@ def faker():
     print(pag.position())
     x,y = pag.position()
     pag.moveTo(100,500,duration=1.6)
-    pag.moveRel(200,500,duration=2)
     pag.rightClick()
+    pag.moveRel(200,500,duration=2)
     pag.rightClick(x,y)
     # pag.displayMousePosition()
 
