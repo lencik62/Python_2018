@@ -2,7 +2,7 @@ import folium
 import pandas as pd
 
 def main():
-    map = folium.Map(
+    foli_map = folium.Map(
         location = [
             43.1799011,
             -114.3509979],
@@ -21,10 +21,10 @@ def main():
 
     add_polygons_with_pop_color(fg_pop)
 
-    add_feature_group_to_map(map, fg_pop, fg_volcanoes)
+    add_feature_group_to_map(foli_map, fg_pop, fg_volcanoes)
 
-    map.add_child(folium.LayerControl())
-    map.save('map.html')
+    foli_map.add_child(folium.LayerControl())
+    foli_map.save('map.html')
 
 def add_feature_group_to_map(map, fg_pop, fg_volcanoes):
     map.add_child(fg_pop)
