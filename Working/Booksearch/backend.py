@@ -15,7 +15,7 @@ def insert(title,author,year,isbn):
     conn.close()
     view()
 
-def get_all():
+def view():
     conn=sqlite3.connect("books.db")
     cur=conn.cursor()
     cur.execute("SELECT * FROM book")

@@ -13,77 +13,125 @@ Funtionaily of the program:
     * View all books
     * Close the program safely
 
-
-Attributes of Book object:
-    Attribute:Title
-                - Title of the book
-    Attribute: Author
-                - Author of the book
-    Attribute:Year
-                - Year of the was published
-    Attribute: ISBN
-                - ISBN of the book
-
-    Type:Title: String
-    Type: Author: String
-    Type:Year: int
-    Type: ISBN: int
 """
 
 
 from tkinter import *
-
-window = Tk()
-
-title_text = StringVar()
-author_text = StringVar()
-year_text = StringVar()
-isbn_text = StringVar()
+import backend
 
 
-title_lbl =  Label(window, text = "Title")
-author_lbl =  Label(window, text = "Author")
-year_lbl =  Label(window, text = "Year")
-isbn_lbl =  Label(window, text = "ISBN")
 
-title_lbl.grid(row = 0, column = 0)
-author_lbl.grid(row = 0, column = 2)
-year_lbl.grid(row = 1, column = 0)
-isbn_lbl.grid(row = 1, column = 2)
+def main():
+    window = Tk()
 
+    title_text = StringVar()
+    author_text = StringVar()
+    year_text = StringVar()
+    isbn_text = StringVar()
 
-title_entry =  Entry(window, textvariable = title_text)
-author_entry =  Entry(window, textvariable = author_text)
-year_entry =  Entry(window, textvariable = year_text)
-isbn_entry =  Entry(window, textvariable = isbn_text)
-
-title_entry.grid(row = 0, column = 1)
-author_entry.grid(row = 0, column = 3)
-year_entry.grid(row = 1, column = 1)
-isbn_entry.grid(row = 1, column = 3)
-
-scroll_bar = Scrollbar(window)
-scroll_bar.grid(row = 2, column = 2, rowspan = 6)
-
-book_list = Listbox(window, height = 6, width = 35)
-book_list.grid(row = 2, column = 0, rowspan = 6, columnspan = 2)
-
-book_list.configure(yscrollcommand = scroll_bar.set)
-scroll_bar.configure(command = book_list.yview)
+    create_labels_on_window(window)
 
 
-view_all_btn = Button(window, text = "View All", width = 12)
-search_entry_btn = Button(window, text = "Search entry", width = 12)
-add_entry_btn = Button(window, text = "Add Entry", width = 12)
-update_btn = Button(window, text = "Update", width = 12)
-delete_btn = Button(window, text = "Delete", width = 12)
-close_btn = Button(window, text = "Close", width = 12)
+    create_entries_on_window(window, title_text, author_text, year_text, isbn_text)
 
-view_all_btn.grid(row = 2, column = 3)
-search_entry_btn.grid(row = 3, column = 3)
-add_entry_btn.grid(row = 4, column = 3)
-update_btn.grid(row = 5, column = 3)
-delete_btn.grid(row = 6, column = 3)
-close_btn.grid(row = 7, column = 3)
+    create_and_bind_listview_with_scrollbar(window)
 
-window.mainloop()
+
+    create_buttons_on_window(window)
+
+    window.mainloop()
+
+def get_selected_row(event):
+    global selected_tuple
+    index = book_list.curselection()[0]
+    selected_tuple = book_list.get(index)
+    title_entry.delete(0, END)
+    title_entry.insert(END, selected_tuple[1])
+    author_entry.delete(0, END)
+    author_entry.insert(END, selected_tuple[2])
+    year_entry.delete(0, END)
+    year_entry.insert(END, selected_tuple[3])
+    isbn_entry.delete(0, END)
+    isbn_entry.insert(END, selected_tuple[4])
+
+def view_command():
+    book_list.delete(0, END)
+    for row in backend.view():
+        book_list.insert(END, row)
+
+def search_command():
+    book_list.delete(0, END)
+    for row in backend.search(title_text.get(), author_text.get(), year_text.get(), isbn_text.get()):
+        book_list.insert(END, row)
+
+def add_command():
+    backend.insert(title_text.get(), author_text.get(), year_text.get(), isbn_text.get())
+    book_list.delete(0, END)
+    book_list.insert(END, (title_text.get(), author_text.get(), year_text.get(), isbn_text.get()))
+
+def delete_command():
+    backend.delete(selected_tuple[0])
+    view_command()
+
+def update_command():
+    backend.update(selected_tuple[0], title_text.get(), author_text.get(), year_text.get(), isbn_text.get())
+
+
+def create_buttons_on_window(window):
+    view_all_btn = Button(window, text = "View All", width = 12, command = view_command )
+    search_entry_btn = Button(window, text = "Search entry", width = 12, command = search_command)
+    add_entry_btn = Button(window, text = "Add Entry", width = 12, command = add_command)
+    update_btn = Button(window, text = "Update", width = 12, command = update_command)
+    delete_btn = Button(window, text = "Delete", width = 12, command = delete_command)
+    close_btn = Button(window, text = "Close", width = 12, command = window.destroy)
+
+    view_all_btn.grid(row = 2, column = 3)
+    search_entry_btn.grid(row = 3, column = 3)
+    add_entry_btn.grid(row = 4, column = 3)
+    update_btn.grid(row = 5, column = 3)
+    delete_btn.grid(row = 6, column = 3)
+    close_btn.grid(row = 7, column = 3)
+
+def create_and_bind_listview_with_scrollbar(window):
+    global book_list
+
+    scroll_bar = Scrollbar(window)
+    scroll_bar.grid(row = 2, column = 2, rowspan = 6)
+
+    book_list = Listbox(window, height = 6, width = 35)
+    book_list.grid(row = 2, column = 0, rowspan = 6, columnspan = 2)
+
+    book_list.configure(yscrollcommand = scroll_bar.set)
+    scroll_bar.configure(command = book_list.yview)
+
+    book_list.bind('<<ListboxSelect>>', get_selected_row)
+
+def create_entries_on_window(window, title_text, author_text, year_text, isbn_text):
+    global title_entry
+    global author_entry
+    global year_entry
+    global isbn_entry
+    title_entry =  Entry(window, textvariable = title_text)
+    author_entry =  Entry(window, textvariable = author_text)
+    year_entry =  Entry(window, textvariable = year_text)
+    isbn_entry =  Entry(window, textvariable = isbn_text)
+
+    title_entry.grid(row = 0, column = 1)
+    author_entry.grid(row = 0, column = 3)
+    year_entry.grid(row = 1, column = 1)
+    isbn_entry.grid(row = 1, column = 3)
+
+def create_labels_on_window(window):
+    title_lbl =  Label(window, text = "Title")
+    author_lbl =  Label(window, text = "Author")
+    year_lbl =  Label(window, text = "Year")
+    isbn_lbl =  Label(window, text = "ISBN")
+
+    title_lbl.grid(row = 0, column = 0)
+    author_lbl.grid(row = 0, column = 2)
+    year_lbl.grid(row = 1, column = 0)
+    isbn_lbl.grid(row = 1, column = 2)
+
+
+if __name__ == '__main__':
+    main()
