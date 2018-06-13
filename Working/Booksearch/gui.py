@@ -34,11 +34,12 @@ class Window(object):
         year_text = StringVar()
         isbn_text = StringVar()
 
-        self._create_labels_on_window(window)
-        self._create_entries_on_window(window, title_text, author_text, year_text, isbn_text)
-        self._create_and_bind_listview_with_scrollbar(window)
-        self._create_buttons_on_window(window)
+        self.__create_labels_on_window(window)
+        self.__create_entries_on_window(window, title_text, author_text, year_text, isbn_text)
+        self.__create_and_bind_listview_with_scrollbar(window)
+        self.__create_buttons_on_window(window)
 
+        self.view_command()
         window.mainloop()
 
     def get_selected_row(self, event):
@@ -72,7 +73,8 @@ class Window(object):
         """
         Conducts a search based on the information of the extry fields that and list the result in the listbox.
             :param self:
-        """   book_list.delete(0, END)
+        """
+        book_list.delete(0, END)
         for row in database.search(title_text.get(), author_text.get(), year_text.get(), isbn_text.get()):
             book_list.insert(END, row)
 
@@ -101,7 +103,7 @@ class Window(object):
         database.update(selected_tuple[0], title_text.get(), author_text.get(), year_text.get(), isbn_text.get())
 
 
-    def _create_buttons_on_window(self, window):
+    def __create_buttons_on_window(self, window):
         """
         Places main CRUD and exit button on the window.
             :param self:
@@ -121,7 +123,7 @@ class Window(object):
         delete_btn.grid(row = 6, column = 3)
         close_btn.grid(row = 7, column = 3)
 
-    def _create_and_bind_listview_with_scrollbar(self, window):
+    def __create_and_bind_listview_with_scrollbar(self, window):
         """
         Places listbox/listview and the scrollbar on the window.
         Also bind the scrollbar with the listview to enable vertical scrolling on listview.
@@ -141,7 +143,7 @@ class Window(object):
 
         book_list.bind('<<ListboxSelect>>', self.get_selected_row)
 
-    def _create_entries_on_window(self, window, title_text, author_text, year_text, isbn_text):
+    def __create_entries_on_window(self, window, title_text, author_text, year_text, isbn_text):
         """
         Places text/entry fields on the window.
             :param self:
@@ -158,7 +160,7 @@ class Window(object):
         year_entry.grid(row = 1, column = 1)
         isbn_entry.grid(row = 1, column = 3)
 
-    def _create_labels_on_window(self, window):
+    def __create_labels_on_window(self, window):
         """
         Places text/entry fields' labels on the window.
             :param self:
