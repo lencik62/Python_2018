@@ -17,13 +17,15 @@ Funtionaily of the program:
 
 
 from tkinter import *
-import backend
 
+from backend import Database
 
 
 def main():
     window = Tk()
+    global title_text,author_text,year_text,isbn_text,database
 
+    database=Database("books.db")
     title_text = StringVar()
     author_text = StringVar()
     year_text = StringVar()
@@ -46,35 +48,35 @@ def get_selected_row(event):
     index = book_list.curselection()[0]
     selected_tuple = book_list.get(index)
     title_entry.delete(0, END)
-    title_entry.insert(END, selected_tuple[1])
+    title_entry.insert(END, selected_tuple[0])
     author_entry.delete(0, END)
-    author_entry.insert(END, selected_tuple[2])
+    author_entry.insert(END, selected_tuple[1])
     year_entry.delete(0, END)
-    year_entry.insert(END, selected_tuple[3])
+    year_entry.insert(END, selected_tuple[2])
     isbn_entry.delete(0, END)
-    isbn_entry.insert(END, selected_tuple[4])
+    isbn_entry.insert(END, selected_tuple[3])
 
 def view_command():
     book_list.delete(0, END)
-    for row in backend.view():
+    for row in database.view():
         book_list.insert(END, row)
 
 def search_command():
     book_list.delete(0, END)
-    for row in backend.search(title_text.get(), author_text.get(), year_text.get(), isbn_text.get()):
+    for row in database.search(title_text.get(), author_text.get(), year_text.get(), isbn_text.get()):
         book_list.insert(END, row)
 
 def add_command():
-    backend.insert(title_text.get(), author_text.get(), year_text.get(), isbn_text.get())
+    database.insert(title_text.get(), author_text.get(), year_text.get(), isbn_text.get())
     book_list.delete(0, END)
     book_list.insert(END, (title_text.get(), author_text.get(), year_text.get(), isbn_text.get()))
 
 def delete_command():
-    backend.delete(selected_tuple[0])
+    database.delete(selected_tuple[0])
     view_command()
 
 def update_command():
-    backend.update(selected_tuple[0], title_text.get(), author_text.get(), year_text.get(), isbn_text.get())
+    database.update(selected_tuple[0], title_text.get(), author_text.get(), year_text.get(), isbn_text.get())
 
 
 def create_buttons_on_window(window):
@@ -107,10 +109,7 @@ def create_and_bind_listview_with_scrollbar(window):
     book_list.bind('<<ListboxSelect>>', get_selected_row)
 
 def create_entries_on_window(window, title_text, author_text, year_text, isbn_text):
-    global title_entry
-    global author_entry
-    global year_entry
-    global isbn_entry
+    global title_entry,author_entry,year_entry,isbn_entry
     title_entry =  Entry(window, textvariable = title_text)
     author_entry =  Entry(window, textvariable = author_text)
     year_entry =  Entry(window, textvariable = year_text)
