@@ -1,20 +1,21 @@
 {%extends "navbar.html"%} {%block content%}
-<div id="main-block">
+
+<div class="text-center mb-4 form-signin">
     <div id="introduction">
-        <h1>Welcome to the site! </h1>
+        <h1 class="display-3">Welcome to the site! </h1>
         <h3>Please fill out the information below to enroll in our program.</h3>
     </div>
-    <div id="inputs">
+    <div id="inputs" class="form-label-group">
         <form action="thanks.html" method="post">
-            <input type="text" title="This is to match you with our current records." placeholder="*first name* *middle name* *last name*"
+            <input type="text" title="This is to match you with our current records." placeholder="Full name"
                 name="users_name" required>
                 <br>
-            <input type="text" title="The unique number give to you." placeholder="The number on your invitation" name - "u_number"required>
+            <input type="text" title="The unique number give to you." placeholder="Invitation number" name - "u_number"required>
             <br>
-            <input type="email" title="This will be primary method of our contact with you." placeholder="The email you wish to be contacted though"
+            <input type="email" title="This will be primary method of our contact with you." placeholder="Email address"
                 name="email" required>
                 <br>
-                <button type="submit">Consume The Invitation & Enroll</button>
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Consume The Invitation & Enroll</button>
         </form>
     </div>
 </div>
