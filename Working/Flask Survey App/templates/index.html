@@ -6,16 +6,15 @@
         <h3>Please fill out the information below to enroll in our program.</h3>
     </div>
     <div id="inputs" class="form-label-group">
-        <form action="thanks.html" method="post">
-            <input type="text" title="This is to match you with our current records." placeholder="Full name"
-                name="users_name" required>
-                <br>
-            <input type="text" title="The unique number give to you." placeholder="Invitation number" name - "u_number"required>
+        <form action="{{url_for('thanks')}}" method="post">
+            <input type="text" title="This is to match you with our current records." placeholder="Full name" name="users_name" required>
             <br>
-            <input type="email" title="This will be primary method of our contact with you." placeholder="Email address"
-                name="email" required>
-                <br>
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Consume The Invitation & Enroll</button>
+            <input type="text" title="The unique number give to you." placeholder="Invitation number" name = "u_number"required>
+            <br>
+            <input type="email" title="This will be primary method of our contact with you." placeholder="Email address" name="email"
+                required>
+            <br>
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Consume The Invitation & Enroll</button>
         </form>
     </div>
 </div>
