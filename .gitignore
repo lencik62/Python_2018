@@ -3,3 +3,7 @@ __pycache__/
 .ipynb_checkpoints/
 .vscode/
 Working/Flask Survey App/virtualEnv/
+# titanic data set
+*test.csv
+*gender_submission.csv
+*train.csv
