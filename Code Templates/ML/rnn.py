@@ -1,8 +1,8 @@
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, LSTM, Dropout
-def build_classifier():
+def build_classifier(data):
     classifier = Sequential()
-    classifier.add(LSTM(units = 50, return_sequences = True, input_shape = (X_train.shape[1], 1)))
+    classifier.add(LSTM(units = 50, return_sequences = True, input_shape = (data.shape[1], 1)))
     classifier.add(Dropout(0.2))
     classifier.add(LSTM(units = 50, return_sequences = True))
     classifier.add(Dropout(0.2))
@@ -15,7 +15,7 @@ def build_classifier():
     return classifier
 
 def main():
-    build_classifier()
+    build_classifier([])
 
 if __name__ == '__main__':
     main()

@@ -13,6 +13,10 @@ def build_classifier():
     classifier.compile(optimizer = 'adam', loss = 'binary_crossentropy', metrics = ['accuracy'])
     return classifier
 
+__doc__ = """
+THIS CLASSIFIER WAS USED TO FIND OBJECT IN A IMG.
+it is a single object classifier but can be modified to get put a range of outputs to find all the object.
+The relu will help on edge detecsion in the image"""
 def main():
     build_classifier()
 
